@@ -103,3 +103,51 @@ Obs2 logged
 { temp: '98F', observers: [ [Function: Obs2] ] }
 */
 
+// 
+// https://www.youtube.com/watch?v=lANfXJdXe34&ab_channel=BeABetterDev
+// Understood!
+
+function WeatherStation() {
+    this.obs = []
+    this.temp = 0
+    this.humidity = 0
+}
+WeatherStation.prototype = {
+    subscribe: function(observer) {
+       return this.obs.push(observer) },
+    unSubscribe: function(deleteObs) {
+       this.obs = this.obs.forEach( el => {
+           if(el != deleteObs ) return el
+       })},
+    notify: function() {
+        this.obs.forEach( el => el.update(this.temp, this.humidity))
+    },
+    measurementsChanged: function( temp, humidity){
+         this.temp = temp; 
+         this.humidity = humidity;
+         this.notify();
+    }
+}
+
+function CurrentDisplay() {
+    this.temp = 0;
+    this.humidity  = 0;
+}
+CurrentDisplay.prototype = {
+    update: function(temp, humidity) {
+        this.temp = temp
+        this.humidity = humidity
+        this.displayCurrent();
+    },
+    displayCurrent: function() {
+        console.log("Current weather is " + this.temp)
+    }
+}
+
+const weSta = new WeatherStation()
+const obs1 = new CurrentDisplay()
+
+weSta.subscribe(obs1);
+weSta.measurementsChanged(80, 45)
+
+console.log(obs1)
