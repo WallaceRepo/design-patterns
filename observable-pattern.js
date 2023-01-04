@@ -1,4 +1,10 @@
- // My creation for the Observer pattern 
+ / *
+object, named the subject, maintains a list of its dependents, called observers, 
+ and notifies them automatically of any state changes, usually by calling one of their methods.
+ Examples are stock price recieving brokers, weather notifier, email subscribers etc
+*/
+
+// My creation for the Observer pattern 
 function Pub(){
     this.temp = 0;
     this.observers = [];
