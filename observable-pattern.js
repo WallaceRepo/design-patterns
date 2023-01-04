@@ -1,3 +1,4 @@
+ // My creation for the Observer pattern 
 function Pub(){
     this.temp = 0;
     this.observers = [];
@@ -53,3 +54,46 @@ Obs3 Today weather is 98F
 }
 
 */
+
+// YOutube example, which was just a half of fucntionality
+
+function Pub(){
+    this.temp = 0;
+    this.observers = [];
+}
+Pub.prototype = {
+    subscribe: function(fn) {
+        this.observers.push(fn)
+    },
+    unSubscribe: function(deletefn) {
+        this.observers = this.observers.filter( ob => ob !== deletefn)
+    },
+    notify: function() {
+        this.observers.forEach( ob => ob.call())
+    },
+    changeTemp: function(temp) {
+        this.temp = temp;
+        this.notify()
+    }
+}
+function Obs1() {
+  console.log('Obs1 logged')
+}
+function Obs2() {
+    console.log("Obs2 logged")
+}
+
+const mypub = new Pub()
+ mypub.subscribe(Obs1);
+ mypub.subscribe(Obs2);
+ 
+ mypub.changeTemp("98F");
+ mypub.unSubscribe(Obs1)
+ 
+ console.log(mypub)
+/*
+Obs1 logged
+Obs2 logged
+{ temp: '98F', observers: [ [Function: Obs2] ] }
+*/
+
