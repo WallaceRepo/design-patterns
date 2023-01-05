@@ -69,3 +69,61 @@ Fancy:  Ford File
  1 Logs
  1 Logs
 */
+class Query {
+    constructor(){
+    this.log = []
+    }
+    add(text) {
+        this.log.push(text)
+    }
+    logger() {
+        return this.log.length
+    }
+}
+
+const logger1 = new Query();
+logger1.add('Today is day')
+logger1.add('Yes, practice');
+console.log(logger1.logger());
+const logger2 = new Query();
+logger2.add('Today is day')
+logger2.add('Yes, practice');
+console.log(logger2.logger());
+
+console.log(Query.instance) // undefined
+console.log('--------------------')
+class Query1 {
+    constructor(){
+    if(Query1.instance == null) {
+        this.log = []
+        Query1.instance = this
+    }
+    return Query1.instance
+    }
+    add(text){
+        this.log.push(text)
+    }
+    logger() {
+        return this.log.length
+    }
+}
+
+const loggers1 = new Query1();
+loggers1.add('Today is day')
+loggers1.add('Yes, practice');
+console.log(loggers1.logger());
+
+const loggers2 = new Query1();
+loggers2.add('Today is day')
+
+console.log(loggers2.logger()); 
+console.log(Query1.instance)
+
+/*
+2
+2
+undefined
+--------------------
+2
+3
+Query1 { log: [ 'Today is day', 'Yes, practice', 'Today is day' ] }
