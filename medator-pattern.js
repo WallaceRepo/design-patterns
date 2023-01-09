@@ -116,3 +116,57 @@ Paul to Ringo: Ha, I heard that!
 Ringo to Paul: Paul, what do you think?
 */
 
+////
+function Chatroom() {
+    this.members = {}
+}
+Chatroom.prototype = {
+    addMember: function(member){
+        this.members[member.name] = member;
+        member.chatroom = this;
+    },
+    sendMsg: function(msg, fromMember,toMember){
+       if (toMember) {
+            toMember.receive(msg, fromMember)
+        } else {
+           for( key in this.members) {
+               if( this.members[key] !== toMember) {
+                   this.members[key].receive(msg, fromMember)
+               }
+           }
+        }
+    }
+}
+function Member(name){
+    this.name = name;
+    this.chatroom = null;
+}
+Member.prototype = {
+    send: function(message, toMember){
+        this.chatroom.sendMsg(message, this, toMember)
+    },
+    receive: function(message, fromMember){
+        console.log( `${fromMember.name} to ${this.name} : ${message}`)
+    }
+}
+
+const chat = new Chatroom();
+
+const bob = new Member("Bob");
+const tim =new Member("Tim");
+const alex = new Member("Alex");
+
+chat.addMember(bob)
+chat.addMember(tim)
+chat.addMember(alex)
+bob.send("Hello", alex)
+tim.send("Ok, time to go")
+
+/*
+Bob to Alex : Hello
+Tim to Bob : Have a great day!
+Tim to Tim : Have a great day!
+Tim to Alex : Have a great day!
+
+*/
+
