@@ -1,4 +1,4 @@
-// Sinlgeton is the way of creating Single Object that is shared among bunch other objects throughout my app, without having to recreate it. All the states, methods, variables of that object is shared among other objects, they don't create their version of instance, just uses the existing one.
+// Singleton is the way of creating Single Object that is shared among bunch other objects throughout my app, without having to recreate it. All the states, methods, variables of that object is shared among other objects, they don't create their version of instance, just uses the existing one.
 // We use singleton db instance and reuse this same inctance everytime we access our tables. 
 class FancyLogger {
     constructor() {
